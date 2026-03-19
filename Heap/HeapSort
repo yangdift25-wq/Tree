@@ -1,0 +1,11 @@
+void HeapSort(HPDataType* a,int n)
+{
+  int end=n;
+  while(end>0)
+  {
+    Swap(a[0],a[end]);
+    end--;
+    AdjustDown(a,end,0);
+  }
+
+  }
