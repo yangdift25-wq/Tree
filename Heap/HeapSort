@@ -7,5 +7,4 @@ void HeapSort(HPDataType* a,int n)
     end--;
     AdjustDown(a,end,0);
   }
-
   }
