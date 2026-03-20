@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include<stdio.h>//NULL
+#include<stdlib.h>//malloc
 
 typedef int BTDataType;
 
