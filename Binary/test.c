@@ -1,5 +1,5 @@
-#include<stdio.h>//NULL
-#include<stdlib.h>//malloc
+#include<stdio.h>
+#include<stdlib.h>
 
 typedef int BTDataType;
 
@@ -72,7 +72,73 @@ void InOrder(BTNode* root)
 	//不是空的就打印root
 	printf("%d ", root->val);
 
-	PrevOrder(root->right);
+	PrevOrder(root->right);//前中后序就是这三个位置变化
+}
+
+void PostOrder(BTNode* root)
+{
+	//判空
+	if (root == NULL)
+	{
+		printf("N ");
+		return;
+	}
+
+	PostOrder(root->left);
+	PostOrder(root->right);
+	printf("%d ", root->val);
+}
+
+//所有节点个数(当然用全局变量size++也可以，不过每一次调用都要置为0麻烦
+int TreeSize(BTNode* root)
+{
+	return root == NULL ? 0 :
+		TreeSize(root->left) +
+		TreeSize(root->right) +
+		1;
+}
+
+//叶子节点个数
+int TreeLeafSize(BTNode* root)
+{
+	if (root == NULL)
+	{
+		return 0;
+	}
+	if (root->left == NULL && root->right == NULL)
+	{
+		return 1;
+	}
+
+	return TreeLeafSize(root->left) + TreeLeafSize(root->right);
+}
+
+//树的高度(时间复杂度o(n))
+int TreeHeight(BTNode* root)
+{
+	if (root == NULL)
+	{
+		return 0;
+	}
+	//用变量吧节点的值存起来，如果不存起来，直接在return 里把leftHeight和rightHeight换成TreeHeight也可以做但是时间复杂度就成了o(n^2)
+	int leftHeight = TreeHeight(root->left);
+	int rightHeight = TreeHeight(root->right);
+
+	return leftHeight > rightHeight ? leftHeight + 1 : rightHeight + 1;
+}
+
+//树的第k层节点数(用递归的方式去做，k=0时,k=1时，k>1时
+int TreeKLevel(BTNode* root, int k)
+{
+	if (root == NULL)
+	{
+		return 0;
+	}
+	if (k == 1)
+	{
+		return 1;
+	}
+	return TreeKLevel(root->left, k-1) + TreeKLevel(root->right, k-1);
 }
 
 int main()
@@ -81,7 +147,27 @@ int main()
 	BTNode* root = CreateTree();
 	//前序遍历
 	PrevOrder(root);
+	//中序遍历
 	printf("\n");
 	InOrder(root);
+	//后序遍历
+	printf("\n");
+	PostOrder(root);
+	
+	//所有节点个数
+	printf("\n");
+	printf("%d", TreeSize(root));
+
+	//叶子节点个数
+	printf("\n");
+	printf("%d",TreeLeafSize(root));
+
+	//树的高度
+	printf("\n");
+	printf("%d", TreeHeight(root));
+
+	//第k层节点个数
+	printf("\n");
+	printf("%d", TreeKLevel(root,2));
 	return 0;
 }
