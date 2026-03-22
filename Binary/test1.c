@@ -28,5 +28,6 @@ bool check(TreeNode* root,int val)
     return check(root->left,val)&&check(root->right,val);
 }
 bool isUnivalTree(struct TreeNode* root) {
+    //传根节点的值，后面的值以此为基准
     return check(root,root->val);
 }
