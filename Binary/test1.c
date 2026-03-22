@@ -24,7 +24,7 @@ bool check(TreeNode* root,int val)
     {
         return false;
     }
-
+    //递归判断的节点不断改变而要判断的值不变
     return check(root->left,val)&&check(root->right,val);
 }
 bool isUnivalTree(struct TreeNode* root) {
