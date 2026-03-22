@@ -1,4 +1,11 @@
 这道题是判断两个二叉树是否相等
+先想想吧
+
+
+
+
+
+
 思路是用递归
 事实上是判断每个根节点是否相等，具体代码如下
 
@@ -17,7 +24,7 @@ bool isSameTree(struct TreeNode* p, struct TreeNode* q) {
     {
         return true;
     }
-    //只要一个为空就返回false,两个空的情况以及判断过了
+    //只要一个为空就返回false,两个空的情况已经判断过了
     if(p==NULL||q==NULL)
     {
         return false;
