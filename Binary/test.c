@@ -123,7 +123,7 @@ int TreeHeight(BTNode* root)
 	//用变量吧节点的值存起来，如果不存起来，直接在return 里把leftHeight和rightHeight换成TreeHeight也可以做但是时间复杂度就成了o(n^2)
 	int leftHeight = TreeHeight(root->left);
 	int rightHeight = TreeHeight(root->right);
-
+	//这里不管是left+1或者right+1都是一样的，都是返回了上一节点
 	return leftHeight > rightHeight ? leftHeight + 1 : rightHeight + 1;
 }
 
@@ -139,6 +139,30 @@ int TreeKLevel(BTNode* root, int k)
 		return 1;
 	}
 	return TreeKLevel(root->left, k-1) + TreeKLevel(root->right, k-1);
+}
+
+//二叉树查找值为x的节点
+BTNode* TreeFind(BTNode* root, BTDataType x)
+{
+	if (root == NULL)
+	{
+		return NULL;
+	}
+	if (root->val == x)
+	{
+		return root;
+	}
+	//如果找到了就层层返回，如果只返回一个root那么也只是返回上一个递归栈，所以还要返回left
+	BTNode* left = TreeFind(root->left, x);
+	if (left != NULL)
+	{
+		return left;
+	}
+	BTNode* right = TreeFind(root->right, x);
+	if (right != NULL)
+	{
+		return right;
+	}
 }
 
 int main()
@@ -169,5 +193,11 @@ int main()
 	//第k层节点个数
 	printf("\n");
 	printf("%d", TreeKLevel(root,2));
+	//查找值为x的节点
+	printf("\n");
+	if (TreeFind(root, 2))
+	{
+		printf("找到了");
+	}
 	return 0;
 }
