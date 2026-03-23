@@ -165,6 +165,85 @@ BTNode* TreeFind(BTNode* root, BTDataType x)
 	}
 }
 
+
+//二叉树的销毁
+//为什么用后序遍历呢,因为用前中序销毁后面的节点就找不到了，要先找到再销毁节点
+void TreeDestroy(BTNode* root)
+{
+	if (root == NULL)
+	{
+		return;
+	}
+
+	TreeDestroy(root->left);
+	TreeDestroy(root->right);
+	free(root);//注意这里用free是malloc申请的节点,在下几行演示
+}
+
+
+//使用malloc以及前序的方法创建树
+BTNode* createTree(char* arr, int* i)
+{
+	//在申请节点之前给数组判空因为当数组的元素为空，也就不需要申请空间
+	if (arr[*i] == '#')
+	{
+		(*i)++;
+		return NULL;
+	}
+	BTNode* root = (BTNode*)malloc(sizeof(BTNode));
+	if (root == NULL)
+	{
+		perror("malloc fail");
+		return NULL;
+	}
+	root->val = arr[*i];
+	(*i)++;
+	root->left = NULL;
+	root->right = NULL;
+	root->left = createTree(arr, i);
+	root->right = createTree(arr, i);
+
+	return root;
+}
+
+//BFS广度优先遍历
+//要用队列实现，但是由于要造轮子的原因，一些队列的函数代码就不写出来了
+void LevelOrder(BTNode* root)
+{
+	//先定义一个队列
+	Queue q;
+	QueueInit(&q);
+
+	//然后再入队
+	if (root)
+	{
+		QueuePush(&q, root);
+	}
+	//进入循环开始一层一层遍历
+	//循环条件判断队列不为空
+	while (!QueueEmpty(&q))
+	{
+		//取出元素
+		BTNode* front = QueueFront(&q);
+		//删除元素
+		QueuePop(&q);
+		//打印
+		printf("%d ", front->val);
+
+		//左右不为空就入队
+		if (front->left)
+		{
+			QueuePush(&q, front->left);
+		}
+		if (front->right)
+		{
+			QueuePush(&q, front->val);
+		}
+	}
+	//销毁队列
+	QueueDestory(&q);
+}
+
 int main()
 {
 	//先申请节点
