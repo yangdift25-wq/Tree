@@ -1,6 +1,6 @@
 #include"Heap.h"
 //1.
-//逐个插入建堆(时间复杂度(n))
+//逐个插入建堆(时间复杂度(o(nlongn))
 /*void test()
 {
   HP php;
