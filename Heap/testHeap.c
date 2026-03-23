@@ -7,6 +7,7 @@ void max_Heap(HPDataType* a,int n,int k)
 {
   for(int i=0;i<k;k++)
   {
+    printf("%d",HPTop(a));
     HPPop(a);
   }
 }
