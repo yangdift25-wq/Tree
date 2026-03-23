@@ -6,7 +6,7 @@
 
 typedef int HPDataType;
 
-//¶Ñ
+
 typedef struct Heap
 {
 	HPDataType* a;
