@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<stdbool.h>
 
 typedef int BTDataType;
 
@@ -243,6 +244,49 @@ void LevelOrder(BTNode* root)
 	//销毁队列
 	QueueDestory(&q);
 }
+
+
+//层序遍历应用
+//判断二叉树是否是完全二叉树
+bool TreeComplete(BTNode* root)
+{
+	Queue q;
+	QueueInit(&q);
+	if (root)
+	{
+		QueuePush(&q, root);
+	}
+	while (!QueueEmpty(&q))
+	{
+		BTNode* front = QueueFront(&q);
+		QueuePop(&q);
+		
+		//遇到第一个空就可以开始判断，如果队列里还有非空节点那就不是完全二叉树
+		if (front == NULL)
+		{
+			break;
+		}
+		QueuePush(&q, front->left);
+		QueuePush(&q, front->right);
+
+	//判断队列不为空进入循环继续判断
+		while (!QueueEmpty(&q))
+		{
+
+			BTNode* front = QueueFront(&q);
+			QueuePop(&q);
+			//如果非空就不是完全二叉树
+			if (front)
+			{
+				QueueDestroy(&q);
+				return false;
+			}
+		}
+		QueueDestroy(&q);
+		return true;
+	}
+}
+
 
 int main()
 {
